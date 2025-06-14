@@ -10,7 +10,7 @@ function calcular(){
     // Validacion de datos
 
     if (isNaN(sueldo) || sueldo < 0) {
-        resultado.textContext = "☠️ Por favor, ingrese un número válido mayor o igual a 0.";
+        resultado.textContent = "☠️ Por favor, ingrese un número válido mayor o igual a 0.";
 
         resultado.style.color = "#f00";
         return;
