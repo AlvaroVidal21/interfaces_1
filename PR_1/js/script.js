@@ -22,3 +22,8 @@ function calcular(){
     resultado.style.color = "#0ff";
 
 }
+
+document.getElementById('calcForm').addEventListener('submit', e => {
+    e.preventDefault();
+    calcular();
+});
