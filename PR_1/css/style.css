@@ -85,3 +85,22 @@ label {
     0 0 20px #ff00cc;
   background-color: #ff33dd;
 }
+
+@media (max-width: 576px) {
+  main {
+    max-width: 90vw;
+  }
+  h1,
+  #resultado {
+    font-size: 1.8rem;
+  }
+  label {
+    font-size: 1.2rem;
+  }
+  .border-glitch {
+    font-size: 0.8rem;
+  }
+  .btn-glitch {
+    font-size: 0.7rem;
+  }
+}
