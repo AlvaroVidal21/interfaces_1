@@ -15,7 +15,7 @@ Este proyecto permite al usuario ingresar su sueldo y calcular automáticamente 
 - HTML5
 - CSS3
 - JavaScript
-- Bootstrap 5 (CDN)
+- Bootstrap 5
 
 ---
 
