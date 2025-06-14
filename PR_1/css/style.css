@@ -1,0 +1,87 @@
+/* FUENTE */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+  font-family: "Press Start 2P", monospace;
+  background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+}
+
+/* TARJETA */
+
+main {
+    max-width: 50vw;
+}
+
+/* SEPARACIONES */
+
+header, form {
+    padding: 1.2rem 0 1.6rem 0;
+
+}
+
+/* TITULO */
+h1, #resultado {
+    font-size: 2.5rem;
+    line-height: 1.5;
+    color: #0ff
+}
+
+
+label {
+    color: #f0f;
+    font-size: 1.8rem;
+}
+
+
+
+
+/* BORDES */
+.border-glitch{
+    background-color: #111;
+    font-size: 0.9rem;
+
+    color: #0ff;
+    border: 2px solid #f0f;
+
+    box-shadow: 0 0 6px #0ff;
+    padding: .75rem;
+
+    border-radius: 4px;
+    text-align: center;
+}
+
+.border-glitch::placeholder {
+    color: #0ff;
+    opacity: .5;
+    font-weight: bold;
+}
+
+/* BOTON */
+
+.btn-glitch {
+  background-color: #ff00cc;       
+  color: #000;                     
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: bold;
+
+
+  border: none;
+  border-radius: 4px;
+  padding: 0.6rem;
+  box-shadow:
+    0 0 6px #00ffff,
+    0 0 12px #ff00cc;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-glitch:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 12px #00ffff,
+    0 0 20px #ff00cc;
+  background-color: #ff33dd;
+}
