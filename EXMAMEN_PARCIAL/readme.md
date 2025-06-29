@@ -38,6 +38,7 @@ Todo desde una interfaz tipo deep web, sin recargas, con un flujo intuitivo y de
 ---
 
 ## 📁 Estructura del proyecto
+"""
 ├── index.html
 ├── css/
 │ └── styles.css
@@ -46,6 +47,8 @@ Todo desde una interfaz tipo deep web, sin recargas, con un flujo intuitivo y de
 ├── assets/
 │ └── (íconos, imágenes opcionales)
 └── README.md
+
+"""
 
 
 ---
