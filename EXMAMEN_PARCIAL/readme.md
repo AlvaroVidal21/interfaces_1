@@ -38,17 +38,17 @@ Todo desde una interfaz tipo deep web, sin recargas, con un flujo intuitivo y de
 ---
 
 ## 📁 Estructura del proyecto
-"""
+```text
+project-name/
 ├── index.html
 ├── css/
 │ └── styles.css
 ├── js/
 │ └── main.js
 ├── assets/
-│ └── (íconos, imágenes opcionales)
+│ └── (icons, images...)
 └── README.md
-
-"""
+```
 
 
 ---
