@@ -39,7 +39,7 @@ Todo desde una interfaz tipo deep web, sin recargas, con un flujo intuitivo y de
 
 ## 📁 Estructura del proyecto
 ```text
-project-name/
+BIONEXUS-PROJECT/
 ├── index.html
 ├── css/
 │ └── styles.css
