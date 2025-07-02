@@ -1,109 +1,224 @@
-/* Reset y estructura base */
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ─── Reset y estructura base ───────────────────────────────────────── */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html, body {
-    height: 100%;
+  height: 100%;
+}
+
+body {
+  background-color: #111;
+  color: #e0e0e0;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 #container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem;
 }
 
-/* Carrusel estilo grid horizontal */
+/* ─── Carrusel ─────────────────────────────────────────────────────── */
+
 #carrusel-bionico {
-    display: grid;
-    grid-template-columns: 10fr repeat(4, 1fr); /* Un módulo expandido y cuatro comprimidos */
-    gap: 8px;
-    list-style: none;
-    padding: 0;
-    overflow-x: auto;
-    margin-bottom: 2rem;
-    transition: grid-template-columns 0.5s ease-in-out;
-    height: 400px;
-    max-width: 100%;
+  display: grid;
+  grid-template-columns: 10fr repeat(4, 1fr);
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  overflow-x: auto;
+  height: 400px;
+  max-width: 100%;
+  transition: grid-template-columns 0.5s ease-in-out;
 }
 
 #carrusel-bionico li {
-    position: relative;
-    min-width: 80px;
-    background-color: #000;
-    border: 1px solid #444;
-    border-radius: 6px;
-    overflow: hidden;
-    transition: all 0.4s ease-in-out;
+  position: relative;
+  min-width: 80px;
+  height: 100%;
+  background-color: #000;
+  border: 1px solid #444;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: all 0.4s ease-in-out;
 }
 
 #carrusel-bionico li article {
-    position: absolute;
-    inset: 0;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 0.8rem;
-    font-family: 'Share Tech Mono', monospace;
+  position: absolute;
+  inset: 0;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.8rem;
 }
 
 #carrusel-bionico li h3 {
-    font-size: 1rem;
-    text-transform: uppercase;
-    white-space: nowrap;
-    transform: rotate(90deg);
-    transform-origin: left top;
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    opacity: 0.6;
-    transition: opacity 0.4s ease;
+  font-size: 1rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: rotate(90deg);
+  transform-origin: left top;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  opacity: 0.6;
+  transition: opacity 0.4s ease;
 }
 
 #carrusel-bionico li p,
-#carrusel-bionico li a {
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    font-size: 0.85rem;
+#carrusel-bionico li a span {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  font-size: 0.85rem;
+}
+
+#carrusel-bionico li .btn-agregar {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
+}
+
+#carrusel-bionico li .btn-agregar span {
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
 #carrusel-bionico li img {
-  position: absolute;        /* Ocúpalo como fondo completo */
-  inset: 0;                  /* top/right/bottom/left = 0 */
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;         /* Cubre todo el espacio sin distorsionar */
+  object-fit: cover;
   filter: grayscale(1) brightness(1.5);
-  opacity: 0;                /* Invisible por defecto */
-  transition: opacity 0.4s ease, filter 0.4s ease;
-  z-index: 0;                /* Detrás del contenido */
+  opacity: 0;
+  transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+  z-index: 0;
 }
 
-#carrusel-bionico li .precio {
-  font-size: 0.9rem;
-  color: #39ff14; /* verde neón estilo consola */
-  font-family: monospace;
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-
-
-/* Estado activo */
 #carrusel-bionico li[data-active="true"] h3,
 #carrusel-bionico li[data-active="true"] p,
-#carrusel-bionico li[data-active="true"] a {
-    opacity: 1;
+#carrusel-bionico li[data-active="true"] a span {
+  opacity: 1;
 }
 
 #carrusel-bionico li[data-active="true"] img {
-  opacity: 0.4;          /* más visible, pero translúcida */
-  scale: 0.75;            /* más pequeña */
+  opacity: 0.4;
+  transform: scale(0.75);
   filter: grayscale(0) brightness(1);
 }
 
-#carrusel-bionico li[data-active="true"] .precio {
-  opacity: 1;
+#carrusel-bionico li[data-active="true"] {
+  box-shadow: 0 0 12px #39ff14;
+  border-color: #39ff14;
+}
+
+#carrusel-bionico li article h3 {
+  color: #39ff14;
+}
+
+#carrusel-bionico li article p,
+#carrusel-bionico li article a span {
+  color: #ccc;
+}
+
+/* ─── Formulario ──────────────────────────────────────────────────── */
+
+#formulario {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+#formulario input,
+#formulario button {
+  background: transparent;
+  border: 1px solid #39ff14;
+  color: #e0e0e0;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+#formulario input::placeholder {
+  color: #6f6f6f;
+}
+
+#formulario input:focus,
+#formulario button:focus {
+  outline: none;
+  box-shadow: 0 0 8px #39ff14;
+}
+
+#formulario button {
+  cursor: pointer;
+}
+
+#formulario button:hover {
+  background: #39ff14;
+  color: #000;
+}
+
+/* ─── Tabla de Compras ───────────────────────────────────────────── */
+
+#tabla-compras {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+#tabla-compras th,
+#tabla-compras td {
+  border: 1px solid #444;
+  padding: 0.75rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+#tabla-compras th {
+  background: #000;
+  color: #39ff14;
+}
+
+#tabla-compras tbody tr:nth-child(odd) {
+  background-color: #1a1a1a;
+}
+
+#tabla-compras tbody tr:nth-child(even) {
+  background-color: #0d0d0d;
+}
+
+/* Botón Eliminar en tabla */
+#tabla-compras .btn-eliminar {
+  background: transparent;
+  border: 1px solid #ff1e1e;
+  color: #ff1e1e;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+#tabla-compras .btn-eliminar:hover {
+  background: #ff1e1e;
+  color: #000;
+}
+
+/* ─── Total Dinámico ─────────────────────────────────────────────── */
+
+#costo-total {
+  font-weight: bold;
+  color: #39ff14;
+  font-size: 1.1rem;
 }

@@ -1,112 +1,97 @@
-// CARRUSEL
-
+// 0. Mantén esto al tope si no lo tenías
 let moduloSeleccionado = null;
+let totalCP = 0;
 
-// MODULOS CYBERPUNKS
+// 1. Función para actualizar el mostrador del total
+function updateTotal() {
+  const totalSpan = document.getElementById("costo-total");
+  totalSpan.textContent = totalCP;
+}
 
+// 2. Función central para agregar filas a la tabla Y actualizar total
+function agregarModuloATabla(modulo) {
+  const tablaBody = document.querySelector("#tabla-compras tbody");
+  const fila = document.createElement("tr");
+  fila.innerHTML = `
+    <td>${modulo.nombre}</td>
+    <td>${modulo.id}</td>
+    <td>${modulo.costo} CP</td>
+    <td><button class="btn-eliminar">🗑️</button></td>
+  `;
+  tablaBody.appendChild(fila);
+
+  // ➕ Incrementar total y refrescar display
+  totalCP += modulo.costo;
+  updateTotal();
+
+  // 3. Botón eliminar: resta del total y quita la fila
+  fila.querySelector(".btn-eliminar").addEventListener("click", () => {
+    totalCP -= modulo.costo;
+    updateTotal();
+    fila.remove();
+  });
+}
+
+// 4. Catálogo plano de módulos
 const modulos = [
-  {
-    id: "BX-ONX-7734",
-    nombre: "Óculus Nexis",
-    categoria: "Ojo",
-    costo: 5000,
-    imagen: "../assets/img/eye.png",
-    descripcion:
-      "Reemplazo ocular con visión nocturna adaptativa, zoom 100x, reconocimiento facial y grabación cifrada en tiempo real.",
-  },
-  {
-    id: "BX-SNW-1987",
-    nombre: "Synapse Weaver",
-    categoria: "Cerebro",
-    costo: 8500,
-    imagen: "../assets/img/cerebro.png",
-    descripcion:
-      "Interfaz neural que acelera el pensamiento, permite multitarea, netrunning pasivo y descarga de conocimientos al instante.",
-  },
-  {
-    id: "BX-TIF-001A",
-    nombre: "Titanium Fist",
-    categoria: "Brazo",
-    costo: 6200,
-    imagen: "../assets/img/brazo.png",
-    descripcion:
-      "Brazo con fuerza aumentada, herramientas retráctiles, retroalimentación háptica y puerto de datos universal.",
-  },
-  {
-    id: "BX-VLS-2049",
-    nombre: "Velocity Striders",
-    categoria: "Piernas",
-    costo: 7800,
-    imagen: "../assets/img/piernas.png",
-    descripcion:
-      "Piernas biónicas con propulsores, giroscopios y sistemas de salto para movilidad extrema y persecuciones urbanas.",
-  },
-  {
-    id: "BX-ECN-0310",
-    nombre: "EchoNet",
-    categoria: "Oído",
-    costo: 4500,
-    imagen: "../assets/img/oidos.png",
-    descripcion:
-      "Implante auditivo con traducción en tiempo real, aislamiento de voz, detección de micrófonos y escucha inalámbrica pasiva.",
-  },
+  { id: "BX-ONX-7734", nombre: "Óculus Nexis", costo: 5000, categoria: "Ojo", descripcion: "Visión nocturna, zoom 100x, reconocimiento facial..." },
+  { id: "BX-SNW-1987", nombre: "Synapse Weaver", costo: 8500, categoria: "Cerebro", descripcion: "Procesamiento cognitivo y conexión a la red neuronal..." },
+  { id: "BX-TIF-001A", nombre: "Titanium Fist", costo: 6200, categoria: "Brazo", descripcion: "Fuerza aumentada, herramientas retráctiles..." },
+  { id: "BX-VLS-2049", nombre: "Velocity Striders", costo: 7800, categoria: "Piernas", descripcion: "Velocidad extrema, micropropulsores, equilibrio giroscópico..." },
+  { id: "BX-ECN-0310", nombre: "EchoNet", costo: 4500, categoria: "Oido", descripcion: "Audición aumentada, análisis de audio, traducción en tiempo real..." }
 ];
 
+// 5. Renderizado de carrusel y enlazado de botones
 document.addEventListener("DOMContentLoaded", () => {
   const carrusel = document.getElementById("carrusel-bionico");
-
   carrusel.innerHTML = "";
-
-  modulos.forEach((modulo, index) => {
+  modulos.forEach(modPlano => {
     const li = document.createElement("li");
-    li.dataset.active = index === 0 ? "true" : "false";
-
     li.innerHTML = `
-  <article>
-    <h3>${modulo.nombre}</h3>
-    <span class="precio">${modulo.costo} CP</span>
-    <p>${modulo.descripcion}</p>
-    <a href="#" class="btn-agregar" data-id="${modulo.id}"><span>Agregar módulo</span></a>
-    <img src="${modulo.imagen}" alt="${modulo.nombre}">
-  </article>
-`;
+      <article>
+        <h3>${modPlano.nombre}</h3>
+        <p>${modPlano.descripcion}</p>
+        <a href="#" class="btn-agregar" data-id="${modPlano.id}">
+          <span>Agregar módulo</span>
+        </a>
+        <img src="assets/img/${modPlano.categoria.toLowerCase()}.png" alt="${modPlano.nombre}">
+      </article>
+    `;
     carrusel.appendChild(li);
   });
 
-  document.querySelectorAll(".btn-agregar").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      const id = btn.dataset.id;
-      const modPlano = modulos.find((m) => m.id === id);
-
-      if (modPlano) {
-        // Creamos la instancia del módulo y la almacenamos en variable global
-        moduloSeleccionado = new ModuloBionico(
-          modPlano.nombre,
-          modPlano.id,
-          modPlano.costo,
-          modPlano.categoria,
-          modPlano.descripcion
-        );
-
-        console.log("🦾 Módulo seleccionado:", moduloSeleccionado);
-      }
-    });
-  });
-
-  // copiado de https://x.com/jh3yy/status/1940066323658158198
-  // https://codepen.io/jh3y/pen/XJWNMOO
-
+  // Carrusel dinámico (efecto expandir/colapsar)
   const items = Array.from(carrusel.querySelectorAll("li"));
   items.forEach((li, idx) => {
     li.addEventListener("click", () => {
-      items.forEach((item) => (item.dataset.active = "false"));
+      items.forEach(i => i.dataset.active = "false");
       li.dataset.active = "true";
-      const cols = items.map((_, i) => (i === idx ? "10fr" : "1fr")).join(" ");
+      const cols = items.map((_, i) => i === idx ? "10fr" : "1fr").join(" ");
       carrusel.style.gridTemplateColumns = cols;
     });
   });
+  carrusel.style.gridTemplateColumns = items.map((_, i) => i === 0 ? "10fr" : "1fr").join(" ");
 
-  const initialCols = items.map((_, i) => (i === 0 ? "10fr" : "1fr")).join(" ");
-  carrusel.style.gridTemplateColumns = initialCols;
+  // 6. Enlazar cada botón "Agregar módulo" para añadir a la tabla
+  document.querySelectorAll(".btn-agregar").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+      const id = btn.dataset.id;
+      const modPlano = modulos.find(m => m.id === id);
+      if (!modPlano) return;
+
+      // Instanciamos y agregamos en la tabla + total
+      moduloSeleccionado = new ModuloBionico(
+        modPlano.nombre,
+        modPlano.id,
+        modPlano.costo,
+        modPlano.categoria,
+        modPlano.descripcion
+      );
+      agregarModuloATabla(moduloSeleccionado);
+    });
+  });
+
+  // 7. Inicializamos el total en 0
+  updateTotal();
 });
