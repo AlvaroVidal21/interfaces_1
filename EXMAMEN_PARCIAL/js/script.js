@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <h3>${modulo.nombre}</h3>
         <span class="precio">${modulo.costo} CP</span>
         <p>${modulo.descripcion}</p>
-        <a href="#"><span>Agregar módulo</span></a>
+        <a href="#" class?"btn-agregar" data-id="${modulo.id}"><span>Agregar módulo</span></a>
         <img src="${modulo.imagen}" alt="${modulo.nombre}">
       </article>
     `;
