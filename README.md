@@ -17,5 +17,3 @@ Este repositorio contiene todos los proyectos, ejercicios y prácticas desarroll
 ---
 
 📌 *Este repositorio refleja el aprendizaje progresivo en el diseño de interfaces web modernas, centradas en el usuario y con buenas prácticas de accesibilidad y responsividad.*
-
-V

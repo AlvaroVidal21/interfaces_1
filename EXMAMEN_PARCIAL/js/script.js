@@ -74,44 +74,25 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.querySelectorAll(".btn-agregar").forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    const id = btn.dataset.id;
-    const modPlano = modulos.find((m) => m.id === id);
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const id = btn.dataset.id;
+      const modPlano = modulos.find((m) => m.id === id);
 
-    if (modPlano) {
-      // Creamos la instancia del módulo y la almacenamos en variable global
-      moduloSeleccionado = new ModuloBionico(
-        modPlano.nombre,
-        modPlano.id,
-        modPlano.costo,
-        modPlano.categoria,
-        modPlano.descripcion
-      );
+      if (modPlano) {
+        // Creamos la instancia del módulo y la almacenamos en variable global
+        moduloSeleccionado = new ModuloBionico(
+          modPlano.nombre,
+          modPlano.id,
+          modPlano.costo,
+          modPlano.categoria,
+          modPlano.descripcion
+        );
 
-      console.log("🦾 Módulo seleccionado:", moduloSeleccionado);
-
-
-      const fila = document.createElement("tr");
-      fila.innerHTML = `
-        <td>${moduloSeleccionado.nombre}</td>
-        <td>${moduloSeleccionado.codigo}</td>
-        <td>${moduloSeleccionado.costo} CP</td>
-        <td><button class="btn-eliminar">🗑️</button></td>
-      `;
-
-      const tablaCompras = document.querySelector("#tabla-compras tbody");
-      tablaCompras.appendChild(fila);
-
-      // funcionalidad para eliminar la fila
-      fila.querySelector(".btn-eliminar").addEventListener("click",  () => {
-        fila.remove();
-        alert("Compra eliminada correctamente.");
-      })
-
-    }
+        console.log("🦾 Módulo seleccionado:", moduloSeleccionado);
+      }
+    });
   });
-})
 
   // copiado de https://x.com/jh3yy/status/1940066323658158198
   // https://codepen.io/jh3y/pen/XJWNMOO
@@ -129,5 +110,3 @@ document.addEventListener("DOMContentLoaded", () => {
   const initialCols = items.map((_, i) => (i === 0 ? "10fr" : "1fr")).join(" ");
   carrusel.style.gridTemplateColumns = initialCols;
 });
-
-;

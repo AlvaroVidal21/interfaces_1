@@ -39,6 +39,8 @@ const inputAlias = document.getElementById("alias");
 const inputBanco = document.getElementById("banco");    
 const inputEmail = document.getElementById("email");
 const tablaCompras = document.getElementById("tabla-compras").querySelector("tbody");
+const spanCostoTotal = document.getElementById("costo-total");
+const compras = [];
 
 
 btnConfirmar.addEventListener("click", (e) => {
@@ -62,18 +64,14 @@ btnConfirmar.addEventListener("click", (e) => {
 
     // Creamos instancia de compra
     const compra = new Compra(moduloSeleccionado, alias, banco, email);
+    compras.push(compra);
 
     // Insertar fila a la tabla
     const fila = document.createElement("tr");
-
-    fila.innerHTML = `
-        <td>${compra.modulo.nombre}</td>
-        <td>${compra.modulo.codigo}</td>
-        <td>${compra.modulo.costo} CP</td>
-        <td><button class="btn-eliminar">🗑️</button></td>
-    `
-
+    fila.innerHTML = compra.renderFila();
     tablaCompras.appendChild(fila);
+
+    actualizarCostoTotal();
 
     // Limpiamos el formulario
     moduloSeleccionado = null;
@@ -84,11 +82,22 @@ btnConfirmar.addEventListener("click", (e) => {
     // funcionalidad para eliminar la fila
     fila.querySelector(".btn-eliminar").addEventListener("click",  () => {
         fila.remove();
+        const index = compras.indexOf(compra);
+        if (index !== -1) {
+            compras.splice(index, 1);
+        }
+        actualizarCostoTotal();
         alert("Compra eliminada correctamente.");
     })
 
 
 })
+
+
+function actualizarCostoTotal() {
+    const total = compras.reduce((acc, c) => acc + c.modulo.costo, 0);
+    spanCostoTotal.textContent = total;
+}
 
 
 
