@@ -1,5 +1,6 @@
-
 // CARRUSEL
+
+let moduloSeleccionado = null;
 
 // MODULOS CYBERPUNKS
 
@@ -10,7 +11,8 @@ const modulos = [
     categoria: "Ojo",
     costo: 5000,
     imagen: "../assets/img/eye.png",
-    descripcion: "Reemplazo ocular con visión nocturna adaptativa, zoom 100x, reconocimiento facial y grabación cifrada en tiempo real."
+    descripcion:
+      "Reemplazo ocular con visión nocturna adaptativa, zoom 100x, reconocimiento facial y grabación cifrada en tiempo real.",
   },
   {
     id: "BX-SNW-1987",
@@ -18,7 +20,8 @@ const modulos = [
     categoria: "Cerebro",
     costo: 8500,
     imagen: "../assets/img/cerebro.png",
-    descripcion: "Interfaz neural que acelera el pensamiento, permite multitarea, netrunning pasivo y descarga de conocimientos al instante."
+    descripcion:
+      "Interfaz neural que acelera el pensamiento, permite multitarea, netrunning pasivo y descarga de conocimientos al instante.",
   },
   {
     id: "BX-TIF-001A",
@@ -26,7 +29,8 @@ const modulos = [
     categoria: "Brazo",
     costo: 6200,
     imagen: "../assets/img/brazo.png",
-    descripcion: "Brazo con fuerza aumentada, herramientas retráctiles, retroalimentación háptica y puerto de datos universal."
+    descripcion:
+      "Brazo con fuerza aumentada, herramientas retráctiles, retroalimentación háptica y puerto de datos universal.",
   },
   {
     id: "BX-VLS-2049",
@@ -34,7 +38,8 @@ const modulos = [
     categoria: "Piernas",
     costo: 7800,
     imagen: "../assets/img/piernas.png",
-    descripcion: "Piernas biónicas con propulsores, giroscopios y sistemas de salto para movilidad extrema y persecuciones urbanas."
+    descripcion:
+      "Piernas biónicas con propulsores, giroscopios y sistemas de salto para movilidad extrema y persecuciones urbanas.",
   },
   {
     id: "BX-ECN-0310",
@@ -42,12 +47,10 @@ const modulos = [
     categoria: "Oído",
     costo: 4500,
     imagen: "../assets/img/oidos.png",
-    descripcion: "Implante auditivo con traducción en tiempo real, aislamiento de voz, detección de micrófonos y escucha inalámbrica pasiva."
-  }
+    descripcion:
+      "Implante auditivo con traducción en tiempo real, aislamiento de voz, detección de micrófonos y escucha inalámbrica pasiva.",
+  },
 ];
-
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
   const carrusel = document.getElementById("carrusel-bionico");
@@ -59,28 +62,72 @@ document.addEventListener("DOMContentLoaded", () => {
     li.dataset.active = index === 0 ? "true" : "false";
 
     li.innerHTML = `
-      <article>
-        <h3>${modulo.nombre}</h3>
-        <span class="precio">${modulo.costo} CP</span>
-        <p>${modulo.descripcion}</p>
-        <a href="#" class?"btn-agregar" data-id="${modulo.id}"><span>Agregar módulo</span></a>
-        <img src="${modulo.imagen}" alt="${modulo.nombre}">
-      </article>
-    `;
-
+  <article>
+    <h3>${modulo.nombre}</h3>
+    <span class="precio">${modulo.costo} CP</span>
+    <p>${modulo.descripcion}</p>
+    <a href="#" class="btn-agregar" data-id="${modulo.id}"><span>Agregar módulo</span></a>
+    <img src="${modulo.imagen}" alt="${modulo.nombre}">
+  </article>
+`;
     carrusel.appendChild(li);
   });
+
+  document.querySelectorAll(".btn-agregar").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const id = btn.dataset.id;
+    const modPlano = modulos.find((m) => m.id === id);
+
+    if (modPlano) {
+      // Creamos la instancia del módulo y la almacenamos en variable global
+      moduloSeleccionado = new ModuloBionico(
+        modPlano.nombre,
+        modPlano.id,
+        modPlano.costo,
+        modPlano.categoria,
+        modPlano.descripcion
+      );
+
+      console.log("🦾 Módulo seleccionado:", moduloSeleccionado);
+
+
+      const fila = document.createElement("tr");
+      fila.innerHTML = `
+        <td>${moduloSeleccionado.nombre}</td>
+        <td>${moduloSeleccionado.codigo}</td>
+        <td>${moduloSeleccionado.costo} CP</td>
+        <td><button class="btn-eliminar">🗑️</button></td>
+      `;
+
+      const tablaCompras = document.querySelector("#tabla-compras tbody");
+      tablaCompras.appendChild(fila);
+
+      // funcionalidad para eliminar la fila
+      fila.querySelector(".btn-eliminar").addEventListener("click",  () => {
+        fila.remove();
+        alert("Compra eliminada correctamente.");
+      })
+
+    }
+  });
+})
+
+  // copiado de https://x.com/jh3yy/status/1940066323658158198
+  // https://codepen.io/jh3y/pen/XJWNMOO
 
   const items = Array.from(carrusel.querySelectorAll("li"));
   items.forEach((li, idx) => {
     li.addEventListener("click", () => {
-      items.forEach(item => item.dataset.active = "false");
+      items.forEach((item) => (item.dataset.active = "false"));
       li.dataset.active = "true";
-      const cols = items.map((_, i) => i === idx ? "10fr" : "1fr").join(" ");
+      const cols = items.map((_, i) => (i === idx ? "10fr" : "1fr")).join(" ");
       carrusel.style.gridTemplateColumns = cols;
     });
   });
 
-  const initialCols = items.map((_, i) => i === 0 ? "10fr" : "1fr").join(" ");
+  const initialCols = items.map((_, i) => (i === 0 ? "10fr" : "1fr")).join(" ");
   carrusel.style.gridTemplateColumns = initialCols;
 });
+
+;
