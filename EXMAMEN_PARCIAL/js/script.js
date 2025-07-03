@@ -43,10 +43,13 @@ const modulos = [
 
 // 5. Renderizado de carrusel y enlazado de botones
 document.addEventListener("DOMContentLoaded", () => {
+  // OJO: Carrusel es el <ul> de mi html! <===== ¡IMPORTANTE!
   const carrusel = document.getElementById("carrusel-bionico");
-  carrusel.innerHTML = "";
+  carrusel.innerHTML = ""; // Limpiar el carrusel
+  // Recorremos el array de modulos:
   modulos.forEach(modPlano => {
-    const li = document.createElement("li");
+    const li = document.createElement("li"); // Se crea un  elemento li
+    // Se inserta el contenido HTML dentro del li 
     li.innerHTML = `
       <article>
         <h3>${modPlano.nombre}</h3>
@@ -61,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Carrusel dinámico (efecto expandir/colapsar)
-  const items = Array.from(carrusel.querySelectorAll("li"));
+  const items = Array.from(carrusel.querySelectorAll("li")); // Convierte los li en un array manipulable
   items.forEach((li, idx) => {
     li.addEventListener("click", () => {
       items.forEach(i => i.dataset.active = "false");
